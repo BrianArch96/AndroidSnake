@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Classic Snake</string>
+    <string name="main_menu_play">Play Snake!</string>
+    <string name="main_menu_options">Options</string>
+    <string name="Leaderboards">Leaderboards</string>
+    <string name="Facbook_app_id">value</string>
+</resources>

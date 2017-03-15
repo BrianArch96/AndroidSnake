@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.brian.afinal">
+
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".GameActivity">
+            <intent-filter>
+                <action android:name="com.example.brian.afinal.GameActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".PopWindow"
+            android:theme="@style/AppTheme.CustomTheme">
+            <intent-filter>
+                <action android:name="com.example.brian.afinal.PopWindow" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".OptionActivity"
+            android:theme="@style/AppTheme.CustomTheme">
+            <intent-filter>
+                <action android:name="com.example.brian.afinal.OptionActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <service android:name=".Services.MusicService" android:exported="true"></service>
+        <activity android:name=".LeaderboardsActivity"
+            android:theme="@style/AppTheme.CustomTheme">
+            <intent-filter>
+                <action android:name="com.example.brian.afinal.LeaderboardsActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
