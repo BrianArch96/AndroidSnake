@@ -1,25 +1,17 @@
 package com.example.brian.afinal;
 
 
-import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Typeface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.media.MediaPlayer;
-import android.net.Uri;
-import android.net.wifi.p2p.WifiP2pManager;
-import android.provider.ContactsContract;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.example.brian.afinal.Database.DatabaseHelper;
 import com.example.brian.afinal.Services.MusicService;
 import com.example.brian.afinal.classes.LeaderboardInput;

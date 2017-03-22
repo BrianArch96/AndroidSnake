@@ -3,19 +3,12 @@ package com.example.brian.afinal.engine;
 import android.content.Context;
 import android.media.MediaPlayer;
 import android.os.Vibrator;
-import android.provider.MediaStore;
-import android.widget.Toast;
-
-import com.example.brian.afinal.GameActivity;
-import com.example.brian.afinal.MainActivity;
 import com.example.brian.afinal.classes.Coordinate;
 import com.example.brian.afinal.enums.GameState;
 import com.example.brian.afinal.enums.TileType;
 import com.example.brian.afinal.enums.Direction;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.jar.Pack200;
 
 /**
  * Created by Brian on 25/02/2017.
@@ -24,6 +17,8 @@ import java.util.jar.Pack200;
 public class GameEngine {
     public static final int gameWidth =28;
     public static final int gameHeight =42;
+    public static final int actualWidth = 27;
+    public static final int actualHeight = 41;
     private List<Coordinate> walls = new ArrayList<>();
     private List<Coordinate> snake = new ArrayList<>();
     private Direction currentDirection = Direction.East;
@@ -32,7 +27,7 @@ public class GameEngine {
     private int score = 0;
     private Vibrator v;
     private MediaPlayer sound;
-    private int speed = 120;
+    private int speed = 210;
     boolean SoundIsPlaying, VibrateIsRunning;
 
     public GameEngine(Context context, MediaPlayer sound, boolean S, boolean V, int changedSpeed) {
@@ -135,21 +130,20 @@ public class GameEngine {
         AddSnake();
         AddWalls();
         AddApple();
-        System.out.println("Hello world");
     }
 
     public void AddApple(){
         apple.clear();
-        apple.add(new Coordinate((int)(Math.random() * gameWidth), (int)(Math.random() * gameHeight)));
+        apple.add(new Coordinate((int)(Math.random() * actualWidth-1), (int)(Math.random() * actualHeight-1)));
     }
 
-    private void AddSnake(){
+    private void AddSnake() {
         snake.clear();
-        snake.add(new Coordinate(10,35));
-        snake.add(new Coordinate(9,35));
-        snake.add(new Coordinate(8,35));
-        snake.add(new Coordinate(7,35));
-        snake.add(new Coordinate(6,35));
+        snake.add(new Coordinate(10, 35));
+        snake.add(new Coordinate(9, 35));
+        snake.add(new Coordinate(8, 35));
+        snake.add(new Coordinate(7, 35));
+        snake.add(new Coordinate(6, 35));
     }
 
     private void AddWalls(){

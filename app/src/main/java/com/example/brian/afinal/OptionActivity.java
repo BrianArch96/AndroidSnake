@@ -32,9 +32,8 @@ public class OptionActivity extends AppCompatActivity {
     private MediaPlayer sound;
     private boolean SoundisPlaying = false;
     private boolean VibrateIsRunning = false;
-    private int speed = 120;
+    private int speed = 200;
     private Intent i;
-    private MediaPlayer mySound;
     private AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.8F);
     private Vibrator v;
     float volume = (float) 0.2;
@@ -46,7 +45,6 @@ public class OptionActivity extends AppCompatActivity {
         v = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
         sound = MediaPlayer.create(this, R.raw.button);
         sound.setVolume(volume, volume);
-        mySound = MediaPlayer.create(this, R.raw.royalty);
         changeTexts();
         i = new Intent("com.example.brian.afinal.GameActivity");
         Options();
@@ -84,7 +82,7 @@ public class OptionActivity extends AppCompatActivity {
         {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                speed = 160 - progress;
+                speed = 200 - progress;
             }
 
             @Override

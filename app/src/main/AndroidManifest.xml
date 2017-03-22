@@ -43,14 +43,6 @@
             </intent-filter>
         </activity>
         <service android:name=".Services.MusicService" android:exported="true"></service>
-        <activity android:name=".LeaderboardsActivity"
-            android:theme="@style/AppTheme.CustomTheme">
-            <intent-filter>
-                <action android:name="com.example.brian.afinal.LeaderboardsActivity" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
     </application>
 
 </manifest>

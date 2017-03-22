@@ -1,9 +1,7 @@
 package com.example.brian.afinal;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.media.Image;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
@@ -11,20 +9,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
-import android.os.Vibrator;
-import android.view.ViewTreeObserver;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.example.brian.afinal.engine.GameEngine;
 import com.example.brian.afinal.View.SnakeViews;
 import com.example.brian.afinal.enums.Direction;
 import com.example.brian.afinal.enums.GameState;
-
-import org.w3c.dom.Text;
 
 
 public class GameActivity extends AppCompatActivity implements View.OnTouchListener{
@@ -39,7 +29,7 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
     public int score;
     private MediaPlayer sound;
     boolean SoundIsPlaying = false, VibrateisRunning = false;
-    private int startSpeed;
+    private int startSpeed = 200;
 
 
 
@@ -61,7 +51,7 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
                 updateDelay = 50;
             }
         }
-        else updateDelay = 120;
+        else updateDelay = 200;
         gameEngine = new GameEngine(this, sound, SoundIsPlaying, VibrateisRunning, updateDelay);
         gameEngine.initGame();
         snakeView = (SnakeViews) findViewById(R.id.snakeView);
@@ -121,7 +111,6 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
         i.putExtra("s", SoundIsPlaying);
         i.putExtra("score", score);
         startActivity(i);
-        updateDelay = 120;
     }
 
     public void pauseGame(){
