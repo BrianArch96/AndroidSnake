@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements Serializable  {
 
 
     public void changeTexts(){
+        // changes text font
         Typeface myTypeFace = Typeface.createFromAsset(getAssets(),"strasua.ttf");
         TextView v =(TextView) findViewById(R.id.textView);
         v.setTypeface(myTypeFace);
@@ -82,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements Serializable  {
                      v.startAnimation(buttonClick);
                      Intent i = new Intent("com.example.brian.afinal.GameActivity");
                      startActivity(i);
+                     // uses custom transition from one window to another
                      overridePendingTransition(R.animator.animation1, R.animator.animation2);
                  }
              }
@@ -92,8 +94,10 @@ public class MainActivity extends AppCompatActivity implements Serializable  {
                     public void onClick(View v) {
                         sound.start();
                         v.startAnimation(buttonClick);
+                        // start the option activity where a user can change certain things for the game
                         Intent i = new Intent("com.example.brian.afinal.OptionActivity");
                         startActivity(i);
+                        // uses custom transition from one window to another
                         overridePendingTransition(R.animator.animation1, R.animator.animation2);
                     }
                 }
@@ -102,10 +106,11 @@ public class MainActivity extends AppCompatActivity implements Serializable  {
             @Override
             public void onClick(View v) {
                 sound.start();
+                // Activates leaderboard screen where the scores and users are shown in a ranking order
                 v.startAnimation(buttonClick);
                Cursor res =  db.getAllData();
                 if (res.getCount() == 0){
-                   // Toast.makeText(MainActivity.this, "No data to display", Toast.LENGTH_LONG).show();
+                    // if there is no data in the database to display, toast message is shown notifying the user of this
                     showMessage("Error", "No data to show");
                     return;
                 }
@@ -118,6 +123,7 @@ public class MainActivity extends AppCompatActivity implements Serializable  {
 
                     inputArray.add(input);
                 }
+               // formats the data
                inputArray = Bubblesort(inputArray);
                 String i = "";
                 for (int j = 0; j < inputArray.size();j++){
@@ -131,6 +137,7 @@ public class MainActivity extends AppCompatActivity implements Serializable  {
         });
     }
 
+    // sorts the ranking based on score from the game and orders them accordingdly
     public ArrayList<LeaderboardInput> Bubblesort(ArrayList<LeaderboardInput> h){
         String tempName; int tempScore;
         for(int i = 0; i < h.size();i++){
@@ -148,6 +155,7 @@ public class MainActivity extends AppCompatActivity implements Serializable  {
         return h;
     }
 
+    // reuseable method for message showing
     public void showMessage(String title, String message){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(true);

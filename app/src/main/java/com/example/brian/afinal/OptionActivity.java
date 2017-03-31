@@ -51,6 +51,7 @@ public class OptionActivity extends AppCompatActivity {
     }
 
     private void changeTexts(){
+        //changes font texts
         Typeface myTypeFace = Typeface.createFromAsset(getAssets(),"ARCADECLASSIC.TTF");
         TextView v =(TextView) findViewById(R.id.options);
         v.setTypeface(myTypeFace);
@@ -99,6 +100,7 @@ public class OptionActivity extends AppCompatActivity {
         check1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // changes booleans if the box is clicked
                 if (check1.isChecked()){
                     StartService();
                     SoundisPlaying = true;
@@ -116,6 +118,7 @@ public class OptionActivity extends AppCompatActivity {
         check2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // changes the boolean whether the box is checked or not
                 if (check2.isChecked()){
                     v.vibrate(400);
                     VibrateIsRunning = true;
@@ -128,10 +131,13 @@ public class OptionActivity extends AppCompatActivity {
         play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // when the user presses the "play snake" button, the game is started importing the variables that may or may have not been
+                // changed in the options method so that they can be used in this instance the game
                 sound.start();
                 v.startAnimation(buttonClick);
                 i.putExtra("speed",speed);
                 startActivity(i);
+                // custom transition animation
                 overridePendingTransition(R.animator.animation1, R.animator.animation2);
             }
         });

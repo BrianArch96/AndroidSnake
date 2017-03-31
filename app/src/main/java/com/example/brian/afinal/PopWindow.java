@@ -27,6 +27,7 @@ public class PopWindow extends AppCompatActivity {
     private int speed, finalScore;
     boolean SoundIsRunning, VibrateIsRunning;
     private DatabaseHelper db;
+    // if player enters nothing as a username but submita their score, they will have a default username of Player
     private String SnakeID = "Player";
     private EditText name;
     private AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.8F);
@@ -49,6 +50,7 @@ public class PopWindow extends AppCompatActivity {
         int height = dm.heightPixels;
         getWindow().setLayout((int)(width*.8),(int)(height*.8));
         Bundle extra = getIntent().getExtras();
+        // sets the variables as those taken in from the gamewindow
         finalScore = extra.getInt("score");
          VibrateIsRunning = extra.getBoolean("v");
          SoundIsRunning = extra.getBoolean("s");
@@ -67,6 +69,7 @@ public class PopWindow extends AppCompatActivity {
     }
 
     @Override
+    //If the back button is pressed, give an alert window notifying the user they are about to leave the activity
     public void onBackPressed(){
         new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert).setTitle("Closing Activity.").
                 setMessage("You're sure you don't want to join the ranks? ")
@@ -82,6 +85,8 @@ public class PopWindow extends AppCompatActivity {
                 .setNegativeButton("No",null).show();
     }
 
+
+    //Changes the text font
     public void changeTexts(){
         Typeface myTypeFace3 = Typeface.createFromAsset(getAssets(),"ARCADECLASSIC.TTF");
         TextView v1 = (TextView) findViewById(R.id.textView4);
@@ -97,6 +102,9 @@ public class PopWindow extends AppCompatActivity {
 
     }
 
+
+    //If the user press the player again button, use the same speed and sound, vibrate booleans that you used before and put them into the new
+    // game activity
     public void playAgain(){
         final Button b = (Button) findViewById(R.id.playAgain);
         b.setOnClickListener(
@@ -115,6 +123,7 @@ public class PopWindow extends AppCompatActivity {
         );
     }
 
+    //Returns the player to the menu
     public void returnToMenu(){
         Button b1 = (Button) findViewById(R.id.returnMenu);
         b1.setOnClickListener(
@@ -124,6 +133,7 @@ public class PopWindow extends AppCompatActivity {
                         v.startAnimation(buttonClick);
                         Intent intent = new Intent(PopWindow.this, MainActivity.class);
                         startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                        //Uses a custom transition from one window to the next, in this case a swiping motion
                         overridePendingTransition(R.animator.animation1, R.animator.animation2);
 
 
@@ -132,6 +142,7 @@ public class PopWindow extends AppCompatActivity {
         );
     }
 
+    //If the user wishes to add his score to the game, it's added to the leaderboard database
     public void addData(){
         Button b2 = (Button) findViewById(R.id.Leaderboards);
         b2.setOnClickListener(new View.OnClickListener() {
@@ -139,10 +150,12 @@ public class PopWindow extends AppCompatActivity {
             public void onClick(View v) {
                 sound.start();
                 v.startAnimation(buttonClick);
+                // if user enters a name
                 String input =  name.getText().toString();
                 if ((input.trim().length() != 0 )){
                     SnakeID = input;
                 }
+                // if user enters a score, boolean activates a toast message thanking them
               boolean isInserted =  db.insertData(SnakeID, Integer.toString(finalScore));
                 if (isInserted){
                     Toast.makeText(PopWindow.this, "Thank you for submitting your score!",Toast.LENGTH_LONG).show();

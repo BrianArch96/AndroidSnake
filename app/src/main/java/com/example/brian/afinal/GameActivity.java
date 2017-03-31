@@ -43,20 +43,27 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
         sound = MediaPlayer.create(this, R.raw.itemgrab);
         Bundle extra = getIntent().getExtras();
         if(extra != null){
+            //Takes in variables from either the options menu or the play again button on the popup window
+
             SoundIsPlaying = extra.getBoolean("Sound");
             VibrateisRunning = extra.getBoolean("Vibrate");
             updateDelay = extra.getInt("speed");
             startSpeed = extra.getInt("speed");
+            // Set the speed limit of the game so it's not unplayable
             if (updateDelay < 50){
                 updateDelay = 50;
             }
         }
         else updateDelay = 200;
+        // Makes a new instance of the gameEngine with the variables we took in from the other activities
         gameEngine = new GameEngine(this, sound, SoundIsPlaying, VibrateisRunning, updateDelay);
+        //start
         gameEngine.initGame();
+        //setup the game world
         snakeView = (SnakeViews) findViewById(R.id.snakeView);
         snakeView.setSnakeMap(gameEngine.GetMap());
         snakeView.setOnTouchListener(this);
+        // get the gamespeed variable so that we can change the speed of the game
         updateDelay = gameEngine.getSpeed();
         snakeView.invalidate();
         pauseGame();
@@ -66,6 +73,7 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
 
     @Override
     public void onBackPressed(){
+        //If the back button is pressed on the android phone, give an alert message
         handler.removeCallbacksAndMessages(null);
         new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert).setTitle("Closing Activity.").
                 setMessage("Are you sure you want to quit?")
@@ -83,6 +91,7 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
     }
 
     private void updateHandler(){
+        //Sets the game in motion
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -92,10 +101,12 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
               }
 
                 if (gameEngine.getCurrentGameState() == GameState.Lost){
+                    // if the game is finished, ie. player has lost, start the popup window activity
                     onGameLost();
                 }
                 snakeView.setSnakeMap(gameEngine.GetMap());
                 snakeView.invalidate();
+                // Update the score of the game using the score variable in the game engine
                 v.setText(String.valueOf(gameEngine.getScore()));
                 updateDelay = gameEngine.getSpeed();
                 score = gameEngine.getScore();
@@ -105,6 +116,7 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
 
 
     private void onGameLost(){
+        // if game is lost, call popup window activity and carry the speed and the two booleans over to it.
         Intent i = new Intent("com.example.brian.afinal.PopWindow");
         i.putExtra("speed", startSpeed);
         i.putExtra("v",VibrateisRunning);
@@ -119,6 +131,7 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
                 new View.OnClickListener(){
                     public void onClick(View v) {
                         if (isPlaying == true){
+                            //pauses the game
                             handler.removeCallbacksAndMessages(null);
                             isPlaying = false;
                         }
@@ -135,15 +148,18 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
     public boolean onTouch(View v, MotionEvent event) {
         switch(event.getAction()){
             case MotionEvent.ACTION_DOWN:
+                // gets coordinate when user presses down on screen
                 prevX = event.getX();
                 prevY = event.getY();
 
                 break;
             case MotionEvent.ACTION_UP:
+                // gets coordinate when user releases finger from screen
                 float newX = event.getX();
                 float newY = event.getY();
+                //checks to see where the press-down is in comparison with the lifting of the finger
                 if (Math.abs(newX-prevX) > Math.abs(newY-prevY)){
-                    //Left oor Right
+                    //Left or Right
                     if (newX > prevX){
                         //LEFT
                         gameEngine.UpdateDirection(Direction.East);

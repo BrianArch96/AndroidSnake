@@ -22,6 +22,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
     @Override
+    //Creates database
     public void onCreate(SQLiteDatabase db) {
         String query = "CREATE TABLE " + TABLE_NAME + "(" + COL_1 + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COL_2 + " TEXT, " + COL_3 + " INTEGER " + ");";
         db.execSQL(query);
@@ -34,6 +35,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
 
     }
+
+    // inserts data(name and score) into the database
     public boolean insertData(String name, String score){
         SQLiteDatabase db = getWritableDatabase();
         ContentValues contentValues = new ContentValues();

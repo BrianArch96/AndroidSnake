@@ -30,6 +30,7 @@ public class GameEngine {
     private int speed = 210;
     boolean SoundIsPlaying, VibrateIsRunning;
 
+    //Constructor used for taking in the variables from an instance of game activity
     public GameEngine(Context context, MediaPlayer sound, boolean S, boolean V, int changedSpeed) {
         v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         this.sound = sound;
@@ -53,7 +54,7 @@ public class GameEngine {
     }
 
     public void update(){
-        // Check the Snake
+        // Check the snakes direction and updates its position accordingly
         switch(currentDirection){
             case North:
                 updateSnake(0,-1);
@@ -75,31 +76,40 @@ public class GameEngine {
             }
         }
 
+        // if the apples coordinate is equal to a wall coodinate reposition the apple so that it's reachable
         for(Coordinate w: walls){
             if(apple.get(0).equals(w)){
                 AddApple();
             }
         }
 
+
+        // if the snakes head equals to any of the rest of it, end the game as the player lost
         for(int i = 1; i < snake.size();i++){
             if(snake.get(0).equals(snake.get(i))){
                currentGameState = GameState.Lost;
             }
         }
 
+        //  check if the apple's coordinate equals to snake
         for (Coordinate a: apple){
             if (snake.get(0).equals(a)){
+                // play sound if boolean is true
                 if (SoundIsPlaying){
                     sound.setVolume((float)0.2,(float)0.2);
                     sound.start();
                 }
+                // add another apple to the level
                 AddApple();
+                // increment score
                 score = score +1;
                 speed = speed -2;
                 if (speed < 10) speed = 10;
+                // if vibrate boolean is true, vibrate the phone on hit
                 if (VibrateIsRunning){
                     Vibrations();
                 }
+                // adds another part of the snake at the end depending on the direction of the snake
                 if(currentDirection ==Direction.South){
                     snake.add(new Coordinate(((snake.get(snake.size()-1).getX())),snake.get(snake.size()-1).getY()+1));
                 }
@@ -126,17 +136,20 @@ public class GameEngine {
 
     }
 
+    // add snake, walls and apple
     public void initGame(){
         AddSnake();
         AddWalls();
         AddApple();
     }
 
+    // clears the current apple location and adds a new one, randoly generated
     public void AddApple(){
         apple.clear();
         apple.add(new Coordinate((int)(Math.random() * actualWidth-1), (int)(Math.random() * actualHeight-1)));
     }
 
+    // initialises the snake at the start of the game
     private void AddSnake() {
         snake.clear();
         snake.add(new Coordinate(10, 35));
@@ -146,6 +159,7 @@ public class GameEngine {
         snake.add(new Coordinate(6, 35));
     }
 
+    // adds walls
     private void AddWalls(){
         for (int x = 0; x < gameWidth;x++){
             //Making the top wall / Making the bottom wall
@@ -167,22 +181,28 @@ public class GameEngine {
             currentDirection = newDirection;
         }
     }
+    // sets the map up based on the gamewidth and gameheight
     public TileType[][] GetMap(){
     TileType[][] map = new TileType[gameWidth][gameHeight];
 
         for (int x = 0;x < gameWidth;x++){
            for (int y = 0; y < gameHeight;y++){
+               // sets the tiles to nothing eg black
                 map[x][y] = TileType.Nothing;
             }
         }
 
         for (Coordinate wall: walls )
+        // sets these tiles to the wall, ie black
             map[wall.getX()][wall.getY()] = TileType.Wall;
 
+
+        // sets these tiles to represent the snake, ie white
         for (Coordinate s : snake){
             map[s.getX()][s.getY()] = TileType.SnakeTail;
         }
 
+        // sets this tile to represent the apple, ie white
         for (Coordinate a: apple){
             map[a.getX()][a.getY()] = TileType.Apple;
         }
@@ -191,6 +211,7 @@ public class GameEngine {
         return map;
     }
 
+    // returns the gamestate, ie running or lost
     public GameState getCurrentGameState(){
         return currentGameState;
     }

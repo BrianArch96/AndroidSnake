@@ -7,7 +7,7 @@ package com.example.brian.afinal.classes;
 public class Coordinate {
 
     private int x, y;
-
+//Makes an object Coordinate made up of an x and y position
     public Coordinate(int x, int y) {
         this.x = x;
         this.y = y;
